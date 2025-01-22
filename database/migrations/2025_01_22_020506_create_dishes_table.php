@@ -8,9 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('dishes', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('visited_at');
+            $table->string('name');
+            $table->string('description');
+            $table->decimal('price');
+            $table->unsignedInteger('rating');
             $table->text('comments');
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
@@ -19,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('dishes');
     }
 };

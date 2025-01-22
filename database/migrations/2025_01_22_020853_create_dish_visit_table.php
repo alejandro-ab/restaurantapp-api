@@ -8,17 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('dish_visit', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('visited_at');
-            $table->text('comments');
-            $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
+            $table->foreignId('visit_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('dish_id')->constrained()->cascadeOnDelete();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('dish_visit');
     }
 };

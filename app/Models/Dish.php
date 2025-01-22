@@ -2,42 +2,37 @@
 
 namespace App\Models;
 
-use Database\Factories\VisitFactory;
+use Database\Factories\DishFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property Carbon $visited_at
+ * @property string $name
+ * @property string $description
+ * @property float $price
+ * @property int $rating
  * @property string $comments
  * @property int $restaurant_id
  *
  * @property Restaurant $restaurant
- * @property Collection<int, Dish> $dishes
+ * @property Collection<int, Visit> $visits
  */
-class Visit extends Model
+class Dish extends Model
 {
-    /** @use HasFactory<VisitFactory> */
+    /** @use HasFactory<DishFactory> */
     use HasFactory;
-
-    protected function casts(): array
-    {
-        return [
-            'visited_at' => 'datetime',
-        ];
-    }
 
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function dishes(): BelongsToMany
+    public function visits(): BelongsToMany
     {
-        return $this->belongsToMany(Dish::class);
+        return $this->belongsToMany(Visit::class);
     }
 }
