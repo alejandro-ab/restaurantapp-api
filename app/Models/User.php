@@ -6,6 +6,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,6 +16,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string $email
  *
  * @property Collection<int, Restaurant> $restaurants
+ * @property Collection<int, Visit> $visits
+ * @property Collection<int, Dish> $dishes
  * @property Collection<int, Label> $labels
  */
 class User extends Authenticatable
@@ -44,6 +47,16 @@ class User extends Authenticatable
     public function restaurants(): HasMany
     {
         return $this->hasMany(Restaurant::class);
+    }
+
+    public function visits(): HasManyThrough
+    {
+        return $this->hasManyThrough(Visit::class, Restaurant::class);
+    }
+
+    public function dishes(): HasManyThrough
+    {
+        return $this->hasManyThrough(Dish::class, Restaurant::class);
     }
 
     public function labels(): HasMany
