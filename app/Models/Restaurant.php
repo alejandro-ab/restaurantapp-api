@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * @property int $id
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property User $user
  * @property Collection<int, Visit> $visits
  * @property Collection<int, Label> $labels
+ * @property Collection<int, Photo> $photos
  */
 class Restaurant extends Model
 {
@@ -42,5 +44,10 @@ class Restaurant extends Model
     public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'restaurant_label');
+    }
+
+    public function photos(): MorphMany
+    {
+        return $this->morphMany(Photo::class, 'photoable');
     }
 }

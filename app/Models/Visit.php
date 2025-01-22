@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Support\Carbon;
  *
  * @property Restaurant $restaurant
  * @property Collection<int, Dish> $dishes
+ * @property Collection<int, Photo> $photos
  */
 class Visit extends Model
 {
@@ -39,5 +41,10 @@ class Visit extends Model
     public function dishes(): BelongsToMany
     {
         return $this->belongsToMany(Dish::class);
+    }
+
+    public function photos(): MorphMany
+    {
+        return $this->morphMany(Photo::class, 'photoable');
     }
 }
