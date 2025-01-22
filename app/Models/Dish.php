@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property Restaurant $restaurant
  * @property Collection<int, Visit> $visits
+ * @property Collection<int, Label> $labels
  */
 class Dish extends Model
 {
@@ -34,5 +35,10 @@ class Dish extends Model
     public function visits(): BelongsToMany
     {
         return $this->belongsToMany(Visit::class);
+    }
+
+    public function labels(): BelongsToMany
+    {
+        return $this->belongsToMany(Label::class, 'dish_label');
     }
 }

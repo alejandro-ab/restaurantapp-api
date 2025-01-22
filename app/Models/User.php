@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $email
  *
  * @property Collection<int, Restaurant> $restaurants
+ * @property Collection<int, Label> $labels
  */
 class User extends Authenticatable
 {
@@ -43,5 +44,10 @@ class User extends Authenticatable
     public function restaurants(): HasMany
     {
         return $this->hasMany(Restaurant::class);
+    }
+
+    public function labels(): HasMany
+    {
+        return $this->hasMany(Label::class);
     }
 }
