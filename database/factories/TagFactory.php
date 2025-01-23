@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Label;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Label>
+ * @extends Factory<Tag>
  */
-class LabelFactory extends Factory
+class TagFactory extends Factory
 {
     public function definition(): array
     {

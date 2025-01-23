@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Database\Factories\LabelFactory;
+use Database\Factories\TagFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,9 +18,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection<int, Restaurant> $restaurants
  * @property Collection<int, Dish> $dishes
  */
-class Label extends Model
+class Tag extends Model
 {
-    /** @use HasFactory<LabelFactory> */
+    /** @use HasFactory<TagFactory> */
     use HasFactory;
 
     public function user(): BelongsTo
@@ -30,11 +30,11 @@ class Label extends Model
 
     public function restaurants(): BelongsToMany
     {
-        return $this->belongsToMany(Restaurant::class, 'restaurant_label');
+        return $this->belongsToMany(Restaurant::class, 'restaurant_tag');
     }
 
     public function dishes(): BelongsToMany
     {
-        return $this->belongsToMany(Dish::class, 'dish_label');
+        return $this->belongsToMany(Dish::class, 'dish_tag');
     }
 }

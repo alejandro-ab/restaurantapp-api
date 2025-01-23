@@ -8,16 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('restaurant_label', function (Blueprint $table) {
+        Schema::create('dish_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('label_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('dish_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('restaurant_label');
+        Schema::dropIfExists('dish_tag');
     }
 };

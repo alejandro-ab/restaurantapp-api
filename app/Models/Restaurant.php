@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  *
  * @property User $user
  * @property Collection<int, Visit> $visits
- * @property Collection<int, Label> $labels
+ * @property Collection<int, Tag> $tags
  * @property Collection<int, Photo> $photos
  */
 class Restaurant extends Model
@@ -41,9 +41,9 @@ class Restaurant extends Model
         return $this->hasMany(Visit::class);
     }
 
-    public function labels(): BelongsToMany
+    public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Label::class, 'restaurant_label');
+        return $this->belongsToMany(Tag::class, 'restaurant_tag');
     }
 
     public function photos(): MorphMany

@@ -8,17 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('labels', function (Blueprint $table) {
+        Schema::create('restaurant_tag', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('color');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
+            $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
         });
     }
 
+
     public function down(): void
     {
-        Schema::dropIfExists('labels');
+        Schema::dropIfExists('restaurant_tag');
     }
 };

@@ -8,15 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('dish_label', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dish_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('label_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('color');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('dish_label');
+        Schema::dropIfExists('tags');
     }
 };

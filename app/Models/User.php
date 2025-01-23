@@ -18,7 +18,7 @@ use Illuminate\Notifications\Notifiable;
  * @property Collection<int, Restaurant> $restaurants
  * @property Collection<int, Visit> $visits
  * @property Collection<int, Dish> $dishes
- * @property Collection<int, Label> $labels
+ * @property Collection<int, Tag> $tags
  */
 class User extends Authenticatable
 {
@@ -59,8 +59,8 @@ class User extends Authenticatable
         return $this->hasManyThrough(Dish::class, Restaurant::class);
     }
 
-    public function labels(): HasMany
+    public function tags(): HasMany
     {
-        return $this->hasMany(Label::class);
+        return $this->hasMany(Tag::class);
     }
 }
