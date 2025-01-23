@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  * @property string $comments
  * @property int $restaurant_id
  *
+ * @property User $user
  * @property Restaurant $restaurant
  * @property Collection<int, Dish> $dishes
  * @property Collection<int, Photo> $photos
@@ -46,5 +47,10 @@ class Visit extends Model
     public function photos(): MorphMany
     {
         return $this->morphMany(Photo::class, 'photoable');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

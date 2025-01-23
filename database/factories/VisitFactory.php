@@ -18,6 +18,7 @@ class VisitFactory extends Factory
             'visited_at' => fake()->dateTime,
             'comments' => fake()->paragraph,
             'restaurant_id' => Restaurant::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

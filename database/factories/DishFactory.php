@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Dish;
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class DishFactory extends Factory
             'rating' => fake()->numberBetween(1, 5),
             'comments' => fake()->paragraph,
             'restaurant_id' => Restaurant::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

@@ -6,7 +6,6 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -49,14 +48,14 @@ class User extends Authenticatable
         return $this->hasMany(Restaurant::class);
     }
 
-    public function visits(): HasManyThrough
+    public function visits(): HasMany
     {
-        return $this->hasManyThrough(Visit::class, Restaurant::class);
+        return $this->hasMany(Visit::class);
     }
 
-    public function dishes(): HasManyThrough
+    public function dishes(): HasMany
     {
-        return $this->hasManyThrough(Dish::class, Restaurant::class);
+        return $this->hasMany(Dish::class);
     }
 
     public function tags(): HasMany

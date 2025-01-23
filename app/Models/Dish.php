@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property string $comments
  * @property int $restaurant_id
  *
+ * @property User $user
  * @property Restaurant $restaurant
  * @property Collection<int, Visit> $visits
  * @property Collection<int, Tag> $tags
@@ -47,5 +48,10 @@ class Dish extends Model
     public function photos(): MorphMany
     {
         return $this->morphMany(Photo::class, 'photoable');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

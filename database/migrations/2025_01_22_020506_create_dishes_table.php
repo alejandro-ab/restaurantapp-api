@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('rating');
             $table->text('comments');
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
