@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 /**
  * @property int $id
  * @property string $name
- * @property string $description
- * @property float $price
- * @property int $rating
- * @property string $comments
+ * @property ?string $description
+ * @property ?float $price
+ * @property ?int $rating
+ * @property ?string $comments
  * @property int $restaurant_id
  *
  * @property User $user

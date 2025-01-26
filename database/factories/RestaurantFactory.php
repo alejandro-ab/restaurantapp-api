@@ -16,8 +16,6 @@ class RestaurantFactory extends Factory
         return [
             'name' => fake()->company,
             'location' => fake()->city,
-            'type' => fake()->randomElement(['fast food', 'casual dining', 'fine dining']),
-            'menu' => fake()->url,
             'comments' => fake()->paragraph,
             'rating' => fake()->numberBetween(1, 5),
             'user_id' => User::factory(),

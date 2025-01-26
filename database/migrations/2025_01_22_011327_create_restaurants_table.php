@@ -11,11 +11,9 @@ return new class extends Migration
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('location');
-            $table->string('type');
-            $table->string('menu');
-            $table->text('comments');
-            $table->unsignedInteger('rating');
+            $table->string('location')->nullable();
+            $table->text('comments')->nullable();
+            $table->unsignedInteger('rating')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

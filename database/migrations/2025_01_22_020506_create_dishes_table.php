@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('dishes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->decimal('price');
-            $table->unsignedInteger('rating');
-            $table->text('comments');
+            $table->string('description')->nullable();
+            $table->decimal('price')->nullable();
+            $table->unsignedInteger('rating')->nullable();
+            $table->text('comments')->nullable();
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

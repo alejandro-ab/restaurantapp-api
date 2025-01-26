@@ -14,11 +14,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 /**
  * @property int $id
  * @property string $name
- * @property string $location
- * @property string $type
- * @property string $menu
- * @property string $comments
- * @property int $rating
+ * @property ?string $location
+ * @property ?string $comments
+ * @property ?int $rating
  * @property int $user_id
  *
  * @property User $user
