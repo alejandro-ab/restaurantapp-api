@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Restaurants\Actions\CreateRestaurantAction;
+use App\Domain\Restaurants\Actions\DeleteRestaurantAction;
 use App\Domain\Restaurants\Actions\UpdateRestaurantAction;
 use App\Domain\Restaurants\Requests\CreateRestaurantRequest;
 use App\Domain\Restaurants\Requests\UpdateRestaurantRequest;
@@ -25,5 +26,12 @@ class RestaurantController extends Controller
         $restaurant = UpdateRestaurantAction::execute($request->validated(), $restaurant);
 
         return ResponseHelper::success($restaurant->toArray());
+    }
+
+    public function destroy(Restaurant $restaurant): JsonResponse
+    {
+        DeleteRestaurantAction::execute($restaurant);
+
+        return ResponseHelper::success();
     }
 }
