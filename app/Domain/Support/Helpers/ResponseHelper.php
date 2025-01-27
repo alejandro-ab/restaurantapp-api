@@ -3,11 +3,12 @@
 namespace App\Domain\Support\Helpers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResponseHelper
 {
-    public static function success(?array $data = null, int $statusCode = Response::HTTP_OK): JsonResponse
+    public static function success(array|JsonResource|null $data = null, int $statusCode = Response::HTTP_OK): JsonResponse
     {
         return response()->json(array_filter([
             'status' => 'OK',
