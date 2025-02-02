@@ -20,9 +20,8 @@ use Illuminate\Support\Carbon;
  * @property User $user
  * @property Restaurant $restaurant
  * @property Collection<int, Dish> $dishes
- * @property Collection<int, Photo> $photos
  */
-class Visit extends Model
+class Visit extends ImageableModel
 {
     /** @use HasFactory<VisitFactory> */
     use HasFactory;
@@ -42,11 +41,6 @@ class Visit extends Model
     public function dishes(): BelongsToMany
     {
         return $this->belongsToMany(Dish::class);
-    }
-
-    public function photos(): MorphMany
-    {
-        return $this->morphMany(Photo::class, 'photoable');
     }
 
     public function user(): BelongsTo
