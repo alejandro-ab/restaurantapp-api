@@ -3,28 +3,28 @@
 namespace Database\Factories;
 
 use App\Models\Dish;
-use App\Models\Photo;
+use App\Models\Image;
 use App\Models\Restaurant;
 use App\Models\Visit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Photo>
+ * @extends Factory<Image>
  */
-class PhotoFactory extends Factory
+class ImageFactory extends Factory
 {
     public function definition(): array
     {
-        $photoable = $this->photoable();
+        $imageable = $this->imageable();
 
         return [
-            'url' => fake()->imageUrl,
-            'photoable_type' => $photoable,
-            'photoable_id' => $photoable::factory(),
+            'path' => fake()->filePath(),
+            'imageable_type' => $imageable,
+            'imageable_id' => $imageable::factory(),
         ];
     }
 
-    private function photoable()
+    private function imageable()
     {
         return fake()->randomElement([
            Restaurant::class,

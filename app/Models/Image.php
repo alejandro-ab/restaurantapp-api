@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use Database\Factories\PhotoFactory;
+use Database\Factories\ImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property string $url
- * @property string $photoable_type
- * @property int $photoable_id
+ * @property string $path
  */
-class Photo extends Model
+class Image extends Model
 {
-    /** @use HasFactory<PhotoFactory> */
+    /** @use HasFactory<ImageFactory> */
     use HasFactory;
 
-    public function photoable(): MorphTo
+    public function imageable(): MorphTo
     {
         return $this->morphTo();
     }
