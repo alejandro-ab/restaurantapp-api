@@ -23,9 +23,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property Restaurant $restaurant
  * @property Collection<int, Visit> $visits
  * @property Collection<int, Tag> $tags
- * @property Collection<int, Photo> $photos
  */
-class Dish extends Model
+class Dish extends ImageableModel
 {
     /** @use HasFactory<DishFactory> */
     use HasFactory;
@@ -43,11 +42,6 @@ class Dish extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'dish_tag');
-    }
-
-    public function photos(): MorphMany
-    {
-        return $this->morphMany(Photo::class, 'photoable');
     }
 
     public function user(): BelongsTo

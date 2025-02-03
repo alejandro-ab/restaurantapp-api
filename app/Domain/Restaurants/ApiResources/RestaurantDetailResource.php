@@ -2,6 +2,7 @@
 
 namespace App\Domain\Restaurants\ApiResources;
 
+use App\Domain\Images\ApiResources\ImageDetailResource;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,8 +20,7 @@ class RestaurantDetailResource extends JsonResource
             'location' => $this->location,
             'comments' => $this->comments,
             'rating' => $this->rating,
-            'visits' => $this->visits,
-            'dishes' => $this->dishes,
+            'images' => ImageDetailResource::collection($this->images),
         ];
     }
 }
