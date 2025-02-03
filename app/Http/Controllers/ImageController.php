@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Domain\Images\Actions\DeleteImageAction;
 use App\Domain\Images\Actions\StoreImageAction;
 use App\Domain\Images\ApiResources\ImageDetailResource;
 use App\Domain\Images\Requests\CreateImageRequest;
@@ -23,5 +25,12 @@ class ImageController extends Controller
         $image = StoreImageAction::execute($model, $request->file('image'));
 
         return ResponseHelper::success(new ImageDetailResource($image));
+    }
+
+    public function destroy(Image $image): JsonResponse
+    {
+        DeleteImageAction::execute($image);
+
+        return ResponseHelper::success();
     }
 }
