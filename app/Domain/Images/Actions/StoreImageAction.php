@@ -2,14 +2,14 @@
 
 namespace App\Domain\Images\Actions;
 
+use App\Domain\Images\Concerns\Imageable;
 use App\Models\Image;
-use App\Models\ImageableModel;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class StoreImageAction
 {
-    public static function execute(ImageableModel $model, UploadedFile $file): Image
+    public static function execute(Imageable $model, UploadedFile $file): Image
     {
         $path = Storage::disk('public')->putFile($model->getPathPrefix(), $file);
 
