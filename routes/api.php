@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/restaurants', RestaurantController::class)->except(['create', 'edit']);
 
-    Route::resource('/tags', TagController::class)->except(['create', 'edit']);
+    Route::resource('/tags', TagController::class)->except(['create', 'edit', 'index', 'show']);
 
     Route::resource('/images', ImageController::class)->only(['show', 'store', 'destroy']);
 });
