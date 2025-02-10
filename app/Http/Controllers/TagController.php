@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Restaurants\Actions\CreateRestaurantAction;
+use App\Domain\Tags\Actions\CreateTagAction;
 use App\Domain\Restaurants\Actions\DeleteRestaurantAction;
 use App\Domain\Restaurants\Actions\UpdateRestaurantAction;
-use App\Domain\Restaurants\ApiResources\RestaurantDetailResource;
+use App\Domain\Tags\ApiResources\TagDetailResource;
 use App\Domain\Restaurants\ApiResources\RestaurantListResource;
-use App\Domain\Restaurants\Requests\CreateRestaurantRequest;
+use App\Domain\Tags\Requests\CreateTagRequest;
 use App\Domain\Restaurants\Requests\UpdateRestaurantRequest;
 use App\Domain\Support\Helpers\ResponseHelper;
 use App\Models\Restaurant;
@@ -20,9 +20,9 @@ class TagController extends Controller
 
     public function store(CreateTagRequest $request): JsonResponse
     {
-        $restaurant = CreateRestaurantAction::execute($request->validated());
-
-        return ResponseHelper::success(new RestaurantDetailResource($restaurant), Response::HTTP_CREATED);
+        $tag = CreateTagAction::execute($request->validated());
+        
+        return ResponseHelper::success(new TagDetailResource($tag), Response::HTTP_CREATED);
     }
 
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant): JsonResponse
