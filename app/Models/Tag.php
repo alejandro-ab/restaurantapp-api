@@ -23,6 +23,12 @@ class Tag extends Model
     /** @use HasFactory<TagFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'name',
+        'color',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
