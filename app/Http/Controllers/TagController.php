@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TagController extends Controller
 {
 
-    public function store(CreateRestaurantRequest $request): JsonResponse
+    public function store(CreateTagRequest $request): JsonResponse
     {
         $restaurant = CreateRestaurantAction::execute($request->validated());
 
