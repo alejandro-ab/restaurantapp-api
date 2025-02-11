@@ -18,7 +18,7 @@ class TagController extends Controller
 {
     public function index(): JsonResponse
     {
-        $tag = Tags::query()
+        $tag = Tag::query()
             ->get(['id', 'name', 'color']);
 
         return ResponseHelper::success(TagListResource::collection($tag));
@@ -45,7 +45,7 @@ class TagController extends Controller
 
     public function destroy(Tag $tag): JsonResponse
     {
-        DeleteTagAction::execute($tag);
+        DeleteagAction::execute($tag);
 
         return ResponseHelper::success();
     }
