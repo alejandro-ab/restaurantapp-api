@@ -3,20 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Tags\Actions\CreateTagAction;
-use App\Domain\Restaurants\Actions\DeleteRestaurantAction;
-use App\Domain\Restaurants\Actions\UpdateRestaurantAction;
+use App\Domain\Tags\Actions\DeleteTagAction;
+use App\Domain\Tags\Actions\UpdateTagAction;
 use App\Domain\Tags\ApiResources\TagDetailResource;
-use App\Domain\Restaurants\ApiResources\RestaurantListResource;
+use App\Domain\Tags\ApiResources\TagListResource;
 use App\Domain\Tags\Requests\CreateTagRequest;
-use App\Domain\Restaurants\Requests\UpdateRestaurantRequest;
+use App\Domain\Tags\Requests\UpdateTagRequest;
 use App\Domain\Support\Helpers\ResponseHelper;
-use App\Models\Restaurant;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class TagController extends Controller
 {
+    public function index(): JsonResponse
+    {
+        $tag = Tags::query()
+            ->get(['id', 'name', 'color']);
+
+        return ResponseHelper::success(TagListResource::collection($tag));
+    }
+
+    public function show(Tag $tag): JsonResponse
+    {
+        return ResponseHelper::success(new TagDetailResource($tag));
+    }
 
     public function store(CreateTagRequest $request): JsonResponse
     {
@@ -25,16 +36,16 @@ class TagController extends Controller
         return ResponseHelper::success(new TagDetailResource($tag), Response::HTTP_CREATED);
     }
 
-    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant): JsonResponse
+    public function update(UpdateTagRequest $request, Tag $tag): JsonResponse
     {
-        $restaurant = UpdateRestaurantAction::execute($request->validated(), $restaurant);
+        $tag = UpdateTagAction::execute($request->validated(), $tag);
 
-        return ResponseHelper::success(new RestaurantDetailResource($restaurant));
+        return ResponseHelper::success(new TagDetailResource($tag));
     }
 
-    public function destroy(Restaurant $restaurant): JsonResponse
+    public function destroy(Tag $tag): JsonResponse
     {
-        DeleteRestaurantAction::execute($restaurant);
+        DeleteTagAction::execute($tag);
 
         return ResponseHelper::success();
     }
