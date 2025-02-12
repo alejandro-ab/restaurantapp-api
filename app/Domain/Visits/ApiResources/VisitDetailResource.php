@@ -2,6 +2,7 @@
 
 namespace App\Domain\Visits\ApiResources;
 
+use App\Domain\Images\ApiResources\ImageDetailResource;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -28,21 +29,7 @@ class VisitDetailResource extends JsonResource
                 'name' => $this->user->name,
                 'email' => $this->user->email,
             ],
-            'dishes' => $this->dishes->map(function ($dish) {
-                return [
-                    'id' => $dish->id,
-                    'name' => $dish->name,
-                    'description' => $dish->description,
-                    'price' => $dish->price,
-                ];
-            }),
-            'photos' => $this->photos->map(function ($photo) {
-                return [
-                    'id' => $photo->id,
-                    'url' => $photo->url,
-                    'description' => $photo->description,
-                ];
-            }),
+            'images' => ImageDetailResource::collection($this->images),
         ];
     }
 }

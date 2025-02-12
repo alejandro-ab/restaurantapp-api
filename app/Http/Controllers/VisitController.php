@@ -19,7 +19,7 @@ class VisitController extends Controller
     public function index(): JsonResponse
     {
         $visits = Visit::query()
-            ->with(['restaurant', 'user', 'dishes', 'photos'])
+            ->with(['user', 'photos'])
             ->get(['id', 'visited_at', 'comments', 'restaurant_id', 'user_id']);
 
         return ResponseHelper::success(VisitListResource::collection($visits));
@@ -27,7 +27,7 @@ class VisitController extends Controller
 
     public function show(Visit $visit): JsonResponse
     {
-        $visit->load(['restaurant', 'user', 'dishes', 'photos']);
+        $visit->load(['user', 'photos']);
         return ResponseHelper::success(new VisitDetailResource($visit));
     }
 
