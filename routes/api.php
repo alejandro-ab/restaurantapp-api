@@ -9,8 +9,10 @@ use App\Http\Controllers\VisitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
-Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,4 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/tags', TagController::class)->except(['create', 'edit']);
 
     Route::resource('/images', ImageController::class)->only(['show', 'store', 'destroy']);
+
+    Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 });
