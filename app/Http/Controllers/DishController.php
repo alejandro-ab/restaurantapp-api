@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Dishes\Actions\CreateDishAction;
+use App\Domain\Dishes\Actions\DeleteDishAction;
 use App\Domain\Dishes\Actions\UpdateDishAction;
 use App\Domain\Dishes\ApiResources\DishDetailResource;
 use App\Domain\Dishes\Requests\CreateDishRequest;
@@ -26,5 +27,12 @@ class DishController extends Controller
         $dish = UpdateDishAction::execute($request->validated(), $dish);
 
         return ResponseHelper::success(new DishDetailResource($dish));
+    }
+
+    public function destroy(Dish $dish): JsonResponse
+    {
+        DeleteDishAction::execute($dish);
+
+        return ResponseHelper::success();
     }
 }
