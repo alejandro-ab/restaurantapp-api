@@ -10,6 +10,10 @@ class UpdateRestaurantAction
     {
         $restaurant->update($data);
 
+        if (isset($data['tags'])) {
+            $restaurant->tags()->sync($data['tags']);
+        }
+
         return $restaurant;
     }
 }

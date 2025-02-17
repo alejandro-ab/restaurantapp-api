@@ -13,6 +13,8 @@ class UpdateRestaurantRequest extends FormRequest
             'location' => ['nullable', 'string', 'max:255'],
             'comments' => ['nullable', 'string'],
             'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'tags' => ['array'],
+            'tags.*' => ['integer', 'exists:tags,id'],
         ];
     }
 }

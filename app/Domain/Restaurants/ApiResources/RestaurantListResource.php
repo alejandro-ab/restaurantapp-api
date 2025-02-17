@@ -2,6 +2,7 @@
 
 namespace App\Domain\Restaurants\ApiResources;
 
+use App\Domain\Tags\ApiResources\TagDetailResource;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,7 +19,7 @@ class RestaurantListResource extends JsonResource
             'name' => $this->name,
             'comments' => $this->comments,
             'rating' => $this->rating,
-            'tags' => $this->tags,
+            'tags' => TagDetailResource::collection($this->tags),
         ];
     }
 }
