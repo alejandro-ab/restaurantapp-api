@@ -1,27 +1,24 @@
 <?php
 
-namespace App\Domain\Restaurants\ApiResources;
+namespace App\Domain\Visits\ApiResources;
 
 use App\Domain\Images\ApiResources\ImageDetailResource;
-use App\Domain\Tags\ApiResources\TagDetailResource;
-use App\Models\Restaurant;
+use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Restaurant
+ * @mixin Visit
  */
-class RestaurantDetailResource extends JsonResource
+class VisitDetailResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'location' => $this->location,
+            'visited_at' => $this->visited_at->toDateString(),
             'comments' => $this->comments,
-            'rating' => $this->rating,
-            'tags' => TagDetailResource::collection($this->tags),
+            'restaurant' => $this->restaurant->name,
             'images' => ImageDetailResource::collection($this->images),
         ];
     }

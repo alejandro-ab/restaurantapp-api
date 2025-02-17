@@ -17,6 +17,10 @@ class CreateRestaurantAction
 
         $user->restaurants()->save($restaurant);
 
+        if (isset($data['tags'])) {
+            $restaurant->tags()->sync($data['tags']);
+        }
+
         return $restaurant;
     }
 }
