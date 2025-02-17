@@ -10,7 +10,7 @@ class UpdateTagRequest extends FormRequest
     {
         return [
             'name' => ['string', 'max:255'],
-            'color' => ['string', 'max:255'],
+            'color' => ['hex_color'],
         ];
     }
 }
