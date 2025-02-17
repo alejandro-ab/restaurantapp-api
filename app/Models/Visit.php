@@ -27,6 +27,12 @@ class Visit extends Model implements Imageable
     /** @use HasFactory<VisitFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'visited_at',
+        'comments',
+        'restaurant_id',
+    ];
+
     protected function casts(): array
     {
         return [
