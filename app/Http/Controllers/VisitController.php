@@ -31,7 +31,6 @@ class VisitController extends Controller
 
     public function show(Visit $visit): JsonResponse
     {
-        $visit->load(['user', 'photos']);
         return ResponseHelper::success(new VisitDetailResource($visit));
     }
 

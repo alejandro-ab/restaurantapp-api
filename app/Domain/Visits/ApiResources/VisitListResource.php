@@ -15,7 +15,7 @@ class VisitListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'visited_at' => $this->visited_at,
+            'visited_at' => $this->visited_at->toDateString(),
             'restaurant' => $this->restaurant->name,
             'comments' => $this->comments,
             'image' => new ImageDetailResource($this->images->first()),

@@ -16,19 +16,9 @@ class VisitDetailResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'visited_at' => $this->visited_at->toDateTimeString(),
+            'visited_at' => $this->visited_at->toDateString(),
             'comments' => $this->comments,
-            'restaurant' => [
-                'id' => $this->restaurant->id,
-                'name' => $this->restaurant->name,
-                'location' => $this->restaurant->location,
-                'rating' => $this->restaurant->rating,
-            ],
-            'user' => [
-                'id' => $this->user->id,
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ],
+            'restaurant' => $this->restaurant->name,
             'images' => ImageDetailResource::collection($this->images),
         ];
     }
