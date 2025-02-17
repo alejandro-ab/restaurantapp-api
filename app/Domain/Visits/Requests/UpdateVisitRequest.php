@@ -11,8 +11,9 @@ class UpdateVisitRequest extends FormRequest
         return [
             'visited_at' => ['date'],
             'comments' => ['nullable', 'string'],
-            'restaurant_id' => ['nullable', 'exists:restaurants,id'],
-            'user_id' => ['nullable', 'exists:users,id'],
+            'restaurant_id' => ['integer', 'exists:restaurants,id'],
+            'dishes' => ['array'],
+            'dishes.*' => ['integer', 'exists:dishes,id'],
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Domain\Visits\Actions;
 
-use App\Models\Visit;
 use App\Models\User;
+use App\Models\Visit;
 use Illuminate\Support\Facades\Auth;
 
 class CreateVisitAction
@@ -16,6 +16,10 @@ class CreateVisitAction
         $visit = Visit::query()->make($data);
 
         $user->visits()->save($visit);
+
+        if (isset($data['dishes'])) {
+            $visit->dishes()->sync($data['dishes']);
+        }
 
         return $visit;
     }

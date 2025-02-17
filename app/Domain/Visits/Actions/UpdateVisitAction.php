@@ -10,6 +10,10 @@ class UpdateVisitAction
     {
         $visit->update($data);
 
+        if (isset($data['dishes'])) {
+            $visit->dishes()->sync($data['dishes']);
+        }
+
         return $visit;
     }
 }
