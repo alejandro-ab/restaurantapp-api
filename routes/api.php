@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DishController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\TagController;
@@ -12,6 +13,8 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/restaurants', RestaurantController::class)->except(['create', 'edit']);
+
+    Route::resource('/dishes', DishController::class)->except(['create', 'edit']);
 
     Route::resource('/tags', TagController::class)->except(['create', 'edit']);
 

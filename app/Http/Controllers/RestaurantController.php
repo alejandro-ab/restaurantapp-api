@@ -11,14 +11,19 @@ use App\Domain\Restaurants\Requests\CreateRestaurantRequest;
 use App\Domain\Restaurants\Requests\UpdateRestaurantRequest;
 use App\Domain\Support\Helpers\ResponseHelper;
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class RestaurantController extends Controller
 {
     public function index(): JsonResponse
     {
-        $restaurants = Restaurant::query()
+        /** @var User $user */
+        $user = Auth::user();
+
+        $restaurants = $user->restaurants()
             ->with(['tags'])
             ->get(['id', 'name', 'comments', 'rating']);
 

@@ -30,6 +30,15 @@ class Dish extends Model implements Imageable
     /** @use HasFactory<DishFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'rating',
+        'comments',
+        'restaurant_id',
+    ];
+
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
