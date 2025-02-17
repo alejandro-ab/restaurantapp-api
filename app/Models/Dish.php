@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Images\Concerns\Imageable;
 use Database\Factories\DishFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,12 +24,20 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property Restaurant $restaurant
  * @property Collection<int, Visit> $visits
  * @property Collection<int, Tag> $tags
- * @property Collection<int, Photo> $photos
  */
-class Dish extends Model
+class Dish extends Model implements Imageable
 {
     /** @use HasFactory<DishFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'rating',
+        'comments',
+        'restaurant_id',
+    ];
 
     public function restaurant(): BelongsTo
     {
@@ -45,13 +54,18 @@ class Dish extends Model
         return $this->belongsToMany(Tag::class, 'dish_tag');
     }
 
-    public function photos(): MorphMany
-    {
-        return $this->morphMany(Photo::class, 'photoable');
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function getPathPrefix(): string
+    {
+        return 'images/dishes';
     }
 }

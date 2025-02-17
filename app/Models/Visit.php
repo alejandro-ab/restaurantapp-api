@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Images\Concerns\Imageable;
 use Database\Factories\VisitFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,9 +21,8 @@ use Illuminate\Support\Carbon;
  * @property User $user
  * @property Restaurant $restaurant
  * @property Collection<int, Dish> $dishes
- * @property Collection<int, Photo> $photos
  */
-class Visit extends Model
+class Visit extends Model implements Imageable
 {
     /** @use HasFactory<VisitFactory> */
     use HasFactory;
@@ -44,13 +44,18 @@ class Visit extends Model
         return $this->belongsToMany(Dish::class);
     }
 
-    public function photos(): MorphMany
-    {
-        return $this->morphMany(Photo::class, 'photoable');
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function getPathPrefix(): string
+    {
+        return 'images/visits';
     }
 }
