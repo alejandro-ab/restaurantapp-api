@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Support\Helpers\ResponseHelper;
 use App\Domain\Visits\Actions\CreateVisitAction;
 use App\Domain\Visits\Actions\DeleteVisitAction;
 use App\Domain\Visits\Actions\UpdateVisitAction;
@@ -9,18 +10,21 @@ use App\Domain\Visits\ApiResources\VisitDetailResource;
 use App\Domain\Visits\ApiResources\VisitListResource;
 use App\Domain\Visits\Requests\CreateVisitRequest;
 use App\Domain\Visits\Requests\UpdateVisitRequest;
-use App\Domain\Support\Helpers\ResponseHelper;
+use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class VisitController extends Controller
 {
     public function index(): JsonResponse
     {
-        $visits = Visit::query()
-            ->with(['user', 'photos'])
-            ->get(['id', 'visited_at', 'comments', 'restaurant_id', 'user_id']);
+        /** @var User $user */
+        $user = Auth::user();
+
+        $visits = $user->visits()->with(['images', 'restaurant:id,name'])
+            ->get(['id', 'visited_at', 'comments', 'restaurant_id']);
 
         return ResponseHelper::success(VisitListResource::collection($visits));
     }
