@@ -12,7 +12,7 @@ class UpdateDishRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'price' => ['nullable', 'numeric'],
+            'price' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
             'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
             'comments' => ['nullable', 'string'],
             'restaurant_id' => ['integer', Rule::exists('restaurants', 'id')->where('user_id', auth()->id())],

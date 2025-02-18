@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/dishes', DishController::class)->except(['create', 'edit']);
 
     Route::resource('/visits', VisitController::class)->except(['create', 'edit']);
+    Route::get('/visits/{visit}/dishes', [VisitController::class, 'dishes']);
 
     Route::resource('/tags', TagController::class)->except(['create', 'edit']);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Dishes\ApiResources\DishListResource;
 use App\Domain\Support\Helpers\ResponseHelper;
 use App\Domain\Visits\Actions\CreateVisitAction;
 use App\Domain\Visits\Actions\DeleteVisitAction;
@@ -53,5 +54,13 @@ class VisitController extends Controller
         DeleteVisitAction::execute($visit);
 
         return ResponseHelper::success();
+    }
+
+    public function dishes(Visit $visit): JsonResponse
+    {
+        $dishes = $visit->dishes()->with(['tags', 'images'])
+            ->get(['dishes.id', 'dishes.name', 'dishes.description', 'dishes.rating']);
+
+        return ResponseHelper::success(DishListResource::collection($dishes));
     }
 }
