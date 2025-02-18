@@ -14,6 +14,8 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/restaurants', RestaurantController::class)->except(['create', 'edit']);
+    Route::get('/restaurants/{restaurant}/dishes', [RestaurantController::class, 'dishes']);
+    Route::get('/restaurants/{restaurant}/visits', [RestaurantController::class, 'visits']);
 
     Route::resource('/dishes', DishController::class)->except(['create', 'edit']);
 

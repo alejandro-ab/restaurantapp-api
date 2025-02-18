@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Dishes\ApiResources\DishListResource;
 use App\Domain\Restaurants\Actions\CreateRestaurantAction;
 use App\Domain\Restaurants\Actions\DeleteRestaurantAction;
 use App\Domain\Restaurants\Actions\UpdateRestaurantAction;
@@ -10,6 +11,7 @@ use App\Domain\Restaurants\ApiResources\RestaurantListResource;
 use App\Domain\Restaurants\Requests\CreateRestaurantRequest;
 use App\Domain\Restaurants\Requests\UpdateRestaurantRequest;
 use App\Domain\Support\Helpers\ResponseHelper;
+use App\Domain\Visits\ApiResources\VisitListResource;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -54,5 +56,23 @@ class RestaurantController extends Controller
         DeleteRestaurantAction::execute($restaurant);
 
         return ResponseHelper::success();
+    }
+
+    public function dishes(Restaurant $restaurant): JsonResponse
+    {
+        $dishes = $restaurant->dishes()
+            ->with(['tags', 'images'])
+            ->get(['id', 'name', 'description', 'rating']);
+
+        return ResponseHelper::success(DishListResource::collection($dishes));
+    }
+
+    public function visits(Restaurant $restaurant): JsonResponse
+    {
+        $visits = $restaurant->visits()
+            ->with(['images', 'restaurant:id,name'])
+            ->get(['id', 'visited_at', 'comments', 'restaurant_id']);
+
+        return ResponseHelper::success(VisitListResource::collection($visits));
     }
 }
