@@ -7,6 +7,8 @@ use App\Domain\Auth\Actions\LogoutUserAction;
 use App\Domain\Auth\Actions\RegisterUserAction;
 use App\Domain\Auth\Actions\ResetPasswordAction;
 use App\Domain\Auth\Actions\SendPasswordResetAction;
+use App\Domain\Auth\Actions\SocialAuth\HandleGithubAuthAction;
+use App\Domain\Auth\Actions\SocialAuth\RedirectToProviderAction;
 use App\Domain\Auth\ApiResources\UserResource;
 use App\Domain\Auth\Requests\ForgotPasswordRequest;
 use App\Domain\Auth\Requests\LoginRequest;
@@ -66,5 +68,21 @@ class AuthController extends Controller
         return response()->json([
             'message' => $message,
         ]);
+    }
+
+    public function redirectToProvider(string $provider, RedirectToProviderAction $redirectToProviderAction): JsonResponse
+    {
+        return response()->json($redirectToProviderAction->execute($provider));
+    }
+
+    public function handleProviderCallback(string $provider): JsonResponse
+    {
+        $data = match ($provider) {
+            'github' => (new HandleGithubAuthAction())->execute(),
+            // 'google' => (new HandleGoogleAuthAction())->execute(),
+            default => ['error' => 'Invalid provider']
+        };
+
+        return response()->json($data);
     }
 }

@@ -15,6 +15,10 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.forgot');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+
+    Route::get('/redirect/{provider}', [AuthController::class, 'redirectToProvider'])->name('social.redirect');
+    Route::get('/callback/{provider}', [AuthController::class, 'handleProviderCallback'])->name('social.callback');
+
 });
 
 Route::get('/user', function (Request $request) {
