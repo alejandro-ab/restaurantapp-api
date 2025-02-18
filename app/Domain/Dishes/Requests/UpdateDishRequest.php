@@ -3,6 +3,7 @@
 namespace App\Domain\Dishes\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateDishRequest extends FormRequest
 {
@@ -11,12 +12,12 @@ class UpdateDishRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'price' => ['nullable', 'numeric'],
+            'price' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
             'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
             'comments' => ['nullable', 'string'],
-            'restaurant_id' => ['integer', 'exists:restaurants,id'],
+            'restaurant_id' => ['integer', Rule::exists('restaurants', 'id')->where('user_id', auth()->id())],
             'tags' => ['array'],
-            'tags.*' => ['integer', 'exists:tags,id'],
+            'tags.*' => ['integer', Rule::exists('tags', 'id')->where('user_id', auth()->id())],
         ];
     }
 }

@@ -23,7 +23,8 @@ class DishController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $dishes = $user->dishes()->with(['tags', 'images'])->get();
+        $dishes = $user->dishes()->with(['tags', 'images'])
+            ->get(['id', 'name', 'description', 'rating']);
 
         return ResponseHelper::success(DishListResource::collection($dishes));
     }

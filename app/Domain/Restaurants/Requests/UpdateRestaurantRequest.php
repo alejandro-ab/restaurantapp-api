@@ -3,6 +3,7 @@
 namespace App\Domain\Restaurants\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRestaurantRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class UpdateRestaurantRequest extends FormRequest
             'comments' => ['nullable', 'string'],
             'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
             'tags' => ['array'],
-            'tags.*' => ['integer', 'exists:tags,id'],
+            'tags.*' => ['integer', Rule::exists('tags', 'id')->where('user_id', auth()->id())],
         ];
     }
 }

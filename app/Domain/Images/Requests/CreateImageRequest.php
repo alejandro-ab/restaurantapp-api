@@ -12,7 +12,7 @@ class CreateImageRequest extends FormRequest
     {
         return [
             'class' => ['required', Rule::in(array_keys(ImageableResolver::MODEL_MAP))],
-            'id' => ['required', 'min:1'],
+            'id' => ['required', 'integer', 'min:1'],
             'image' => ['required', 'image'],
         ];
     }
