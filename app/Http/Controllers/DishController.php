@@ -14,16 +14,21 @@ use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DishController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
         $dishes = $user->dishes()->with(['tags', 'images'])
+            ->when($request->get('name'), function ($query, $name) {
+                $query->where('name', 'like', "%$name%");
+            })
             ->get(['id', 'name', 'description', 'rating']);
 
         return ResponseHelper::success(DishListResource::collection($dishes));
@@ -31,6 +36,8 @@ class DishController extends Controller
 
     public function show(Dish $dish): JsonResponse
     {
+        Gate::authorize('view', $dish);
+
         return ResponseHelper::success(new DishDetailResource($dish));
     }
 
@@ -43,6 +50,8 @@ class DishController extends Controller
 
     public function update(Dish $dish, UpdateDishRequest $request): JsonResponse
     {
+        Gate::authorize('update', $dish);
+
         $dish = UpdateDishAction::execute($request->validated(), $dish);
 
         return ResponseHelper::success(new DishDetailResource($dish));
@@ -50,6 +59,8 @@ class DishController extends Controller
 
     public function destroy(Dish $dish): JsonResponse
     {
+        Gate::authorize('delete', $dish);
+
         DeleteDishAction::execute($dish);
 
         return ResponseHelper::success();

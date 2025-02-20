@@ -10,11 +10,14 @@ use App\Domain\Images\Resolvers\ImageableResolver;
 use App\Domain\Support\Helpers\ResponseHelper;
 use App\Models\Image;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 
 class ImageController extends Controller
 {
     public function show(Image $image): JsonResponse
     {
+        Gate::authorize('view', $image);
+
         return ResponseHelper::success(new ImageDetailResource($image));
     }
 
@@ -29,6 +32,8 @@ class ImageController extends Controller
 
     public function destroy(Image $image): JsonResponse
     {
+        Gate::authorize('delete', $image);
+
         DeleteImageAction::execute($image);
 
         return ResponseHelper::success();
