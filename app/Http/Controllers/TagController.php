@@ -14,6 +14,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,6 +36,8 @@ class TagController extends Controller
 
     public function show(Tag $tag): JsonResponse
     {
+        Gate::authorize('view', $tag);
+
         return ResponseHelper::success(new TagDetailResource($tag));
     }
 
@@ -47,6 +50,8 @@ class TagController extends Controller
 
     public function update(UpdateTagRequest $request, Tag $tag): JsonResponse
     {
+        Gate::authorize('update', $tag);
+
         $tag = UpdateTagAction::execute($request->validated(), $tag);
 
         return ResponseHelper::success(new TagDetailResource($tag));
@@ -54,6 +59,8 @@ class TagController extends Controller
 
     public function destroy(Tag $tag): JsonResponse
     {
+        Gate::authorize('delete', $tag);
+
         DeleteTagAction::execute($tag);
 
         return ResponseHelper::success();

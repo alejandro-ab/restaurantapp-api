@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,6 +40,8 @@ class VisitController extends Controller
 
     public function show(Visit $visit): JsonResponse
     {
+        Gate::authorize('view', $visit);
+
         return ResponseHelper::success(new VisitDetailResource($visit));
     }
 
@@ -51,6 +54,8 @@ class VisitController extends Controller
 
     public function update(UpdateVisitRequest $request, Visit $visit): JsonResponse
     {
+        Gate::authorize('update', $visit);
+
         $visit = UpdateVisitAction::execute($request->validated(), $visit);
 
         return ResponseHelper::success(new VisitDetailResource($visit));
@@ -58,6 +63,8 @@ class VisitController extends Controller
 
     public function destroy(Visit $visit): JsonResponse
     {
+        Gate::authorize('delete', $visit);
+
         DeleteVisitAction::execute($visit);
 
         return ResponseHelper::success();
@@ -65,6 +72,8 @@ class VisitController extends Controller
 
     public function dishes(Visit $visit): JsonResponse
     {
+        Gate::authorize('view', $visit);
+
         $dishes = $visit->dishes()->with(['tags', 'images'])
             ->get(['dishes.id', 'dishes.name', 'dishes.description', 'dishes.rating']);
 

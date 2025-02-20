@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 /**
  * @property int $id
  * @property string $path
+ *
+ * @property Restaurant|Dish|Visit $imageable
  */
 class Image extends Model
 {

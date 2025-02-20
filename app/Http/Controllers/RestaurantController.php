@@ -16,6 +16,7 @@ use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,6 +39,8 @@ class RestaurantController extends Controller
 
     public function show(Restaurant $restaurant): JsonResponse
     {
+        Gate::authorize('view', $restaurant);
+
         return ResponseHelper::success(new RestaurantDetailResource($restaurant));
     }
 
@@ -50,6 +53,8 @@ class RestaurantController extends Controller
 
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant): JsonResponse
     {
+        Gate::authorize('update', $restaurant);
+
         $restaurant = UpdateRestaurantAction::execute($request->validated(), $restaurant);
 
         return ResponseHelper::success(new RestaurantDetailResource($restaurant));
@@ -57,6 +62,8 @@ class RestaurantController extends Controller
 
     public function destroy(Restaurant $restaurant): JsonResponse
     {
+        Gate::authorize('delete', $restaurant);
+
         DeleteRestaurantAction::execute($restaurant);
 
         return ResponseHelper::success();
@@ -64,6 +71,8 @@ class RestaurantController extends Controller
 
     public function dishes(Restaurant $restaurant): JsonResponse
     {
+        Gate::authorize('view', $restaurant);
+
         $dishes = $restaurant->dishes()
             ->with(['tags', 'images'])
             ->get(['id', 'name', 'description', 'rating']);
@@ -73,6 +82,8 @@ class RestaurantController extends Controller
 
     public function visits(Restaurant $restaurant): JsonResponse
     {
+        Gate::authorize('view', $restaurant);
+
         $visits = $restaurant->visits()
             ->with(['images', 'restaurant:id,name'])
             ->get(['id', 'visited_at', 'comments', 'restaurant_id']);
