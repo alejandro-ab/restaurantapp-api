@@ -16,17 +16,21 @@ use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RestaurantController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
         $restaurants = $user->restaurants()
             ->with(['tags'])
+            ->when($request->get('name'), function ($query, $name) {
+                $query->where('name', 'like', "%$name%");
+            })
             ->get(['id', 'name', 'comments', 'rating']);
 
         return ResponseHelper::success(RestaurantListResource::collection($restaurants));

@@ -15,16 +15,23 @@ use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class VisitController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
         $visits = $user->visits()->with(['images', 'restaurant:id,name'])
+            ->when($request->get('from'), function ($query, $from) {
+                $query->where('visited_at', '>=', $from);
+            })
+            ->when($request->get('to'), function ($query, $to) {
+                $query->where('visited_at', '<=', $to);
+            })
             ->get(['id', 'visited_at', 'comments', 'restaurant_id']);
 
         return ResponseHelper::success(VisitListResource::collection($visits));

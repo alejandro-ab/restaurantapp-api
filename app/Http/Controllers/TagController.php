@@ -14,16 +14,21 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TagController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $tag = $user->tags()->get(['id', 'name', 'color']);
+        $tag = $user->tags()
+            ->when($request->get('name'), function ($query, $name) {
+                $query->where('name', 'like', "%$name%");
+            })
+            ->get(['id', 'name', 'color']);
 
         return ResponseHelper::success(TagListResource::collection($tag));
     }
