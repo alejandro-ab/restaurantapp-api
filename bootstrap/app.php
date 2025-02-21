@@ -3,12 +3,15 @@
 use App\Domain\Support\Helpers\ResponseHelper;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -29,20 +32,27 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->wantsJson()) {
-                return ResponseHelper::error($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+                return ResponseHelper::error(trans('exceptions.authentication'), Response::HTTP_UNAUTHORIZED);
             }
         });
 
-        $exceptions->render(function (AuthorizationException $e, Request $request) {
+        $exceptions->render(function (AccessDeniedHttpException $e, Request $request) {
             if ($request->wantsJson()) {
-                return ResponseHelper::error($e->getMessage(), Response::HTTP_FORBIDDEN);
+                return ResponseHelper::error(trans('exceptions.authorization'), Response::HTTP_FORBIDDEN);
+            }
+        });
+
+
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            if ($request->wantsJson()) {
+                return ResponseHelper::error(trans('exceptions.record_not_found'), Response::HTTP_FORBIDDEN);
             }
         });
 
         $exceptions->render(function (Throwable $e, Request $request) {
             if ($request->wantsJson()) {
                 return ResponseHelper::error(
-                    $e->getMessage(),
+                    trans('exceptions.default'),
                     method_exists($e, 'getStatusCode') ? $e->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
