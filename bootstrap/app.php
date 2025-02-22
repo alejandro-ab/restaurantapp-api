@@ -45,7 +45,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->wantsJson()) {
-                return ResponseHelper::error(trans('exceptions.record_not_found'), Response::HTTP_FORBIDDEN);
+                return ResponseHelper::error(trans('exceptions.not_found'), Response::HTTP_NOT_FOUND);
             }
         });
 
