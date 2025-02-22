@@ -2,12 +2,11 @@
 
 namespace App\Domain\Auth\Actions;
 
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Password;
 
 class SendPasswordResetAction
 {
-    public function execute(string $email): string
+    public static function execute(string $email): string
     {
         $status = Password::sendResetLink(['email' => $email]);
 

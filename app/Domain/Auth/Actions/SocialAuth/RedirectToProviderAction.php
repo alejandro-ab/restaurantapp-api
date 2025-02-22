@@ -6,7 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class RedirectToProviderAction
 {
-    public function execute(string $provider): array
+    public static function execute(string $provider): array
     {
         $redirectUrl = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
 

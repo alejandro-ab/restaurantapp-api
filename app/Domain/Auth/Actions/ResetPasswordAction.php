@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Password;
 
 class ResetPasswordAction
 {
-    public function execute(array $data): string
+    public static function execute(array $data): string
     {
         $status = Password::reset(
             $data,

@@ -6,7 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class HandleGithubAuthAction
 {
-    public function execute(): array
+    public static function execute(): array
     {
         $githubUser = Socialite::driver('github')->stateless()->user();
 

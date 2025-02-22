@@ -8,9 +8,9 @@ use Illuminate\Validation\ValidationException;
 
 class LoginUserAction
 {
-    public function execute(string $email, string $password, string $deviceName): string
+    public static function execute(string $email, string $password, string $deviceName): string
     {
-        $user = User::where('email', $email)->first();
+        $user = User::query()->where('email', $email)->first();
 
         if (! $user || ! Hash::check($password, $user->password)) {
             throw ValidationException::withMessages([

@@ -22,19 +22,19 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function register(RegisterRequest $request, RegisterUserAction $registerUserAction): JsonResponse
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $user = $registerUserAction->execute($request->validated());
+        $user = RegisterUserAction::execute($request->validated());
 
         return ResponseHelper::success(new UserResource($user), 201);
     }
 
     /* @throws ValidationException */
-    public function login(LoginRequest $request, LoginUserAction $loginUserAction): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         [ 'email' => $email, 'password' => $password, 'device_name' => $device_name ] = $request->validated();
 
-        $token = $loginUserAction->execute(
+        $token = LoginUserAction::execute(
             $email,
             $password,
             $device_name
@@ -45,36 +45,36 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request, LogoutUserAction $logoutUserAction): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        $logoutUserAction->execute($request->user());
+        LogoutUserAction::execute($request->user());
 
         return ResponseHelper::success();
     }
 
-    public function forgotPassword(ForgotPasswordRequest $request, SendPasswordResetAction $sendPasswordResetAction): JsonResponse
+    public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
     {
-        $message = $sendPasswordResetAction->execute($request->validated('email'));
+        $message = SendPasswordResetAction::execute($request->validated('email'));
 
         return ResponseHelper::success(['message' => $message]);
     }
 
-    public function resetPassword(ResetPasswordRequest $request, ResetPasswordAction $resetPasswordAction): JsonResponse
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
-        $message = $resetPasswordAction->execute($request->validated());
+        $message = ResetPasswordAction::execute($request->validated());
 
         return ResponseHelper::success(['message' => $message]);
     }
 
-    public function redirectToProvider(string $provider, RedirectToProviderAction $redirectToProviderAction): JsonResponse
+    public function redirectToProvider(string $provider): JsonResponse
     {
-        return response()->json($redirectToProviderAction->execute($provider));
+        return response()->json(RedirectToProviderAction::execute($provider));
     }
 
     public function handleProviderCallback(string $provider): JsonResponse
     {
         $data = match ($provider) {
-            'github' => (new HandleGithubAuthAction())->execute(),
+            'github' => HandleGithubAuthAction::execute(),
             // 'google' => (new HandleGoogleAuthAction())->execute(),
             default => ['error' => 'Invalid provider']
         };
