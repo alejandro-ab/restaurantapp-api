@@ -3,18 +3,6 @@
 declare(strict_types=1);
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Validación del idioma
-    |--------------------------------------------------------------------------
-    |
-    | Las siguientes líneas de idioma contienen los mensajes de error predeterminados utilizados por
-    | La clase validadora. Algunas de estas reglas tienen múltiples versiones tales
-    | como las reglas de tamaño. Siéntase libre de modificar cada uno de estos mensajes aquí.
-    |
-    */
-
     'accepted' => 'El campo :attribute debe ser aceptado.',
     'accepted_if' => 'El campo :attribute debe ser aceptado cuando :other es :value.',
     'active_url' => 'El campo :attribute no es una URL válida.',
@@ -160,34 +148,11 @@ return [
     'ulid' => 'El :attribute debe ser un ULID valido.',
     'uuid' => 'El :attribute debe ser un UUID valido.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validación del idioma personalizado
-    |--------------------------------------------------------------------------
-    |
-    | Aquí puede especificar mensajes de validación personalizados para atributos utilizando el
-    | convención "attribute.rule" para nombrar las líneas. Esto hace que sea rápido
-    | especifique una línea de idioma personalizada específica para una regla de atributo dada.
-    |
-    */
-
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Atributos de validación personalizados
-    |--------------------------------------------------------------------------
-    |
-    | Las siguientes líneas de idioma se utilizan para intercambiar los marcadores de posición de atributo.
-    | con algo más fácil de leer, como la dirección de correo electrónico.
-    | de "email". Esto simplemente nos ayuda a hacer los mensajes un poco más limpios.
-    |
-    */
-
     'attributes' => [],
-
 ];
