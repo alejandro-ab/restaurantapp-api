@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $password
+ * @property string|null $email_verified_at
+ * @property string $remember_token
+ * @property string $created_at
+ * @property string $updated_at
  *
  * @property Collection<int, Restaurant> $restaurants
  * @property Collection<int, Visit> $visits
@@ -22,7 +28,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
