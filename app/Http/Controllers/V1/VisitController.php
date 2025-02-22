@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Domain\Dishes\ApiResources\DishListResource;
 use App\Domain\Support\Helpers\ResponseHelper;
@@ -11,6 +11,7 @@ use App\Domain\Visits\ApiResources\VisitDetailResource;
 use App\Domain\Visits\ApiResources\VisitListResource;
 use App\Domain\Visits\Requests\CreateVisitRequest;
 use App\Domain\Visits\Requests\UpdateVisitRequest;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\JsonResponse;

@@ -3,6 +3,6 @@
 return [
     'authentication' => 'No autenticado',
     'authorization' => 'No autorizado',
-    'record_not_found' => 'Registro no encontrado',
+    'not_found' => 'No encontrado',
     'default' => '¡Ups! Algo salió mal',
 ];

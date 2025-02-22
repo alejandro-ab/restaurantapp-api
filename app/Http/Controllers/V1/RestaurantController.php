@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Domain\Dishes\ApiResources\DishListResource;
 use App\Domain\Restaurants\Actions\CreateRestaurantAction;
@@ -12,6 +12,7 @@ use App\Domain\Restaurants\Requests\CreateRestaurantRequest;
 use App\Domain\Restaurants\Requests\UpdateRestaurantRequest;
 use App\Domain\Support\Helpers\ResponseHelper;
 use App\Domain\Visits\ApiResources\VisitListResource;
+use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
