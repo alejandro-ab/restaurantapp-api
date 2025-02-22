@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $visited_at
  * @property ?string $comments
  * @property int $restaurant_id
+ * @property int $user_id
  *
  * @property User $user
  * @property Restaurant $restaurant

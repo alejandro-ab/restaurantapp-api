@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property ?int $rating
  * @property ?string $comments
  * @property int $restaurant_id
+ * @property int $user_id
  *
  * @property User $user
  * @property Restaurant $restaurant

@@ -3,6 +3,7 @@
 namespace App\Domain\Visits\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateVisitRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class UpdateVisitRequest extends FormRequest
         return [
             'visited_at' => ['date'],
             'comments' => ['nullable', 'string'],
-            'restaurant_id' => ['integer', 'exists:restaurants,id'],
+            'restaurant_id' => ['integer', Rule::exists('restaurants', 'id')->where('user_id', auth()->id())],
             'dishes' => ['array'],
-            'dishes.*' => ['integer', 'exists:dishes,id'],
+            'dishes.*' => ['integer', Rule::exists('dishes', 'id')->where('restaurant_id', $this->get('restaurant_id'))],
         ];
     }
 }

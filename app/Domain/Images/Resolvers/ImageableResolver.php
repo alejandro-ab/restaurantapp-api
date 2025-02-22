@@ -6,6 +6,8 @@ use App\Domain\Images\Concerns\Imageable;
 use App\Models\Dish;
 use App\Models\Restaurant;
 use App\Models\Visit;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class ImageableResolver
 {
@@ -17,8 +19,17 @@ class ImageableResolver
 
     public static function resolve(string $class, int $id): Imageable
     {
+        /** @var Model $modelClass */
         $modelClass = self::MODEL_MAP[$class];
 
-        return $modelClass::query()->findOrFail($id);
+        $model = $modelClass::query()->where('user_id', auth()->id())->find($id);
+
+        if (!$model) {
+            throw ValidationException::withMessages([
+                'id' => [trans('validation.exists', ['attribute' => 'id'])],
+            ]);
+        }
+
+        return $model;
     }
 }
