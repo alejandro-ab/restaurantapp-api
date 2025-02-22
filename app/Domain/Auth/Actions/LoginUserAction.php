@@ -14,7 +14,7 @@ class LoginUserAction
 
         if (! $user || ! Hash::check($password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => trans('auth.failed'),
             ]);
         }
 
