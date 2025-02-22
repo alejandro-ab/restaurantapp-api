@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Domain\Auth\Actions\LoginUserAction;
 use App\Domain\Auth\Actions\LogoutUserAction;
@@ -14,6 +14,7 @@ use App\Domain\Auth\Requests\ForgotPasswordRequest;
 use App\Domain\Auth\Requests\LoginRequest;
 use App\Domain\Auth\Requests\RegisterRequest;
 use App\Domain\Auth\Requests\ResetPasswordRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
