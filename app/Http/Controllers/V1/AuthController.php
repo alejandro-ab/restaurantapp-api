@@ -17,6 +17,8 @@ use App\Domain\Auth\Requests\ResetPasswordRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Domain\Support\Helpers\ResponseHelper;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -24,23 +26,22 @@ class AuthController extends Controller
     {
         $user = $registerUserAction->execute($request->validated());
 
-        return response()->json([
-            'user' => new UserResource($user),
-            'message' => 'User registered successfully',
-        ], 201);
+        return ResponseHelper::success(new UserResource($user), 201);
     }
 
+    /* @throws ValidationException */
     public function login(LoginRequest $request, LoginUserAction $loginUserAction): JsonResponse
     {
+        [ 'email' => $email, 'password' => $password, 'device_name' => $device_name ] = $request->validated();
+
         $token = $loginUserAction->execute(
-            $request->email,
-            $request->password,
-            $request->device_name
+            $email,
+            $password,
+            $device_name
         );
 
-        return response()->json([
+        return ResponseHelper::success([
             'token' => $token,
-            'message' => 'User logged in successfully',
         ]);
     }
 
@@ -48,27 +49,21 @@ class AuthController extends Controller
     {
         $logoutUserAction->execute($request->user());
 
-        return response()->json([
-            'message' => 'User logged out successfully',
-        ]);
+        return ResponseHelper::success();
     }
 
     public function forgotPassword(ForgotPasswordRequest $request, SendPasswordResetAction $sendPasswordResetAction): JsonResponse
     {
-        $message = $sendPasswordResetAction->execute($request->email);
+        $message = $sendPasswordResetAction->execute($request->validated('email'));
 
-        return response()->json([
-            'message' => $message,
-        ]);
+        return ResponseHelper::success(['message' => $message]);
     }
 
     public function resetPassword(ResetPasswordRequest $request, ResetPasswordAction $resetPasswordAction): JsonResponse
     {
         $message = $resetPasswordAction->execute($request->validated());
 
-        return response()->json([
-            'message' => $message,
-        ]);
+        return ResponseHelper::success(['message' => $message]);
     }
 
     public function redirectToProvider(string $provider, RedirectToProviderAction $redirectToProviderAction): JsonResponse
@@ -84,6 +79,6 @@ class AuthController extends Controller
             default => ['error' => 'Invalid provider']
         };
 
-        return response()->json($data);
+        return ResponseHelper::success($data);
     }
 }
