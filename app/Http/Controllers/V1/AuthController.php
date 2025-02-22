@@ -19,6 +19,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Domain\Support\Helpers\ResponseHelper;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -26,10 +27,9 @@ class AuthController extends Controller
     {
         $user = RegisterUserAction::execute($request->validated());
 
-        return ResponseHelper::success(new UserResource($user), 201);
+        return ResponseHelper::success(new UserResource($user), Response::HTTP_CREATED);
     }
 
-    /* @throws ValidationException */
     public function login(LoginRequest $request): JsonResponse
     {
         [ 'email' => $email, 'password' => $password, 'device_name' => $device_name ] = $request->validated();

@@ -20,7 +20,7 @@ class ResetPasswordAction
         );
 
         if ($status !== Password::PASSWORD_RESET) {
-            return __($status);
+            return trans($status);
         }
 
         return 'Password reset successfully';
