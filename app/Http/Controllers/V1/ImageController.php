@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Domain\Images\Actions\DeleteImageAction;
 use App\Domain\Images\Actions\StoreImageAction;
@@ -8,6 +8,7 @@ use App\Domain\Images\ApiResources\ImageDetailResource;
 use App\Domain\Images\Requests\CreateImageRequest;
 use App\Domain\Images\Resolvers\ImageableResolver;
 use App\Domain\Support\Helpers\ResponseHelper;
+use App\Http\Controllers\Controller;
 use App\Models\Image;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;

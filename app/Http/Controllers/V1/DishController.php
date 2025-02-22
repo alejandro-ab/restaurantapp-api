@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Domain\Dishes\Actions\CreateDishAction;
 use App\Domain\Dishes\Actions\DeleteDishAction;
@@ -10,6 +10,7 @@ use App\Domain\Dishes\ApiResources\DishListResource;
 use App\Domain\Dishes\Requests\CreateDishRequest;
 use App\Domain\Dishes\Requests\UpdateDishRequest;
 use App\Domain\Support\Helpers\ResponseHelper;
+use App\Http\Controllers\Controller;
 use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;

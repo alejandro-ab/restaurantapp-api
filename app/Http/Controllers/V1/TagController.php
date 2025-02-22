@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Domain\Support\Helpers\ResponseHelper;
 use App\Domain\Tags\Actions\CreateTagAction;
@@ -10,6 +10,7 @@ use App\Domain\Tags\ApiResources\TagDetailResource;
 use App\Domain\Tags\ApiResources\TagListResource;
 use App\Domain\Tags\Requests\CreateTagRequest;
 use App\Domain\Tags\Requests\UpdateTagRequest;
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
