@@ -4,6 +4,7 @@ namespace App\Domain\Support\Helpers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResponseHelper
@@ -24,11 +25,10 @@ class ResponseHelper
         ], $statusCode);
     }
 
-    public static function validationError(array $errors): JsonResponse
+    public static function validationError(ValidationException $validationException): JsonResponse
     {
-        return response()->json([
-            'status' => 'FAILED',
-            'errors' => $errors,
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        $errors = implode(' ', array_map(fn($error) => implode(' ', $error), $validationException->errors()));
+
+        return self::error($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
