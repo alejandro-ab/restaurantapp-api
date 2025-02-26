@@ -16,9 +16,9 @@ use App\Domain\Auth\Requests\RegisterRequest;
 use App\Domain\Auth\Requests\ResetPasswordRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Domain\Support\Helpers\ResponseHelper;
-use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -71,14 +71,18 @@ class AuthController extends Controller
         return response()->json(RedirectToProviderAction::execute($provider));
     }
 
-    public function handleProviderCallback(string $provider): JsonResponse
+    public function handleProviderCallback(string $provider): RedirectResponse
     {
         $data = match ($provider) {
             'github' => HandleGithubAuthAction::execute(),
-            // 'google' => (new HandleGoogleAuthAction())->execute(),
             default => ['error' => 'Invalid provider']
         };
 
-        return ResponseHelper::success($data);
+        if (isset($data['error'])) {
+            return redirect('restaurantapp://oauthredirect?error=' . urlencode($data['error']));
+        }
+
+        $token = $data['token'];
+        return redirect("restaurantapp://oauthredirect?token={$token}");
     }
 }
