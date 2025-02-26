@@ -7,7 +7,6 @@ use App\Models\Dish;
 use App\Models\Restaurant;
 use App\Models\Visit;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
 
 class ImageableResolver
 {
@@ -17,19 +16,11 @@ class ImageableResolver
         'DISH' => Dish::class,
     ];
 
-    public static function resolve(string $class, int $id): Imageable
+    public static function resolve(string $class, int $id): ?Imageable
     {
         /** @var Model $modelClass */
         $modelClass = self::MODEL_MAP[$class];
 
-        $model = $modelClass::query()->where('user_id', auth()->id())->find($id);
-
-        if (!$model) {
-            throw ValidationException::withMessages([
-                'id' => [trans('validation.exists', ['attribute' => 'id'])],
-            ]);
-        }
-
-        return $model;
+        return $modelClass::query()->where('user_id', auth()->id())->find($id);
     }
 }

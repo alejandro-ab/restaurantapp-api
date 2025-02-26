@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Image;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
@@ -25,6 +26,12 @@ class ImageController extends Controller
     public function store(CreateImageRequest $request): JsonResponse
     {
         $model = ImageableResolver::resolve($request->input('class'), $request->input('id'));
+
+        if (!$model) {
+            throw ValidationException::withMessages([
+                'id' => [trans('validation.exists', ['attribute' => 'id'])],
+            ]);
+        }
 
         $image = StoreImageAction::execute($model, $request->file('image'));
 
