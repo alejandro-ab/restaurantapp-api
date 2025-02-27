@@ -18,7 +18,7 @@ class VisitListResource extends JsonResource
             'visited_at' => $this->visited_at->toDateString(),
             'restaurant' => $this->restaurant->name,
             'comments' => $this->comments,
-            'image' => new ImageDetailResource($this->images->first()),
+            'images' => ImageDetailResource::collection($this->images->take(1)),
         ];
     }
 }

@@ -21,7 +21,7 @@ class DishListResource extends JsonResource
             'description' => $this->description,
             'rating' => $this->rating,
             'tags' => TagDetailResource::collection($this->tags),
-            'image' => new ImageDetailResource($this->images->first()),
+            'images' => ImageDetailResource::collection($this->images->take(1)),
         ];
     }
 }
