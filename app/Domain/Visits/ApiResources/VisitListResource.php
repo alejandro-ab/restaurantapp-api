@@ -16,7 +16,7 @@ class VisitListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'visited_at' => $this->visited_at->toDateString(),
+            'visited_at' => $this->visited_at->format('Y/m/d'),
             'restaurant' => new RestaurantSimpleResource($this->restaurant),
             'comments' => $this->comments,
             'images' => ImageDetailResource::collection($this->images->take(1)),
