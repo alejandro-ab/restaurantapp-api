@@ -3,6 +3,7 @@
 namespace App\Domain\Dishes\ApiResources;
 
 use App\Domain\Images\ApiResources\ImageDetailResource;
+use App\Domain\Restaurants\ApiResources\RestaurantSimpleResource;
 use App\Domain\Tags\ApiResources\TagDetailResource;
 use App\Models\Dish;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class DishDetailResource extends JsonResource
             'price' => $this->price,
             'rating' => $this->rating,
             'comments' => $this->comments,
-            'restaurant' => $this->restaurant_id,
+            'restaurant' => new RestaurantSimpleResource($this->restaurant),
             'tags' => TagDetailResource::collection($this->tags),
             'images' => ImageDetailResource::collection($this->images),
         ];
