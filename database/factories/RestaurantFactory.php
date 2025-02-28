@@ -15,7 +15,10 @@ class RestaurantFactory extends Factory
     {
         return [
             'name' => fake()->company,
-            'location' => fake()->city,
+            'location' => [
+                'latitude' => fake()->latitude,
+                'longitude' => fake()->longitude,
+            ],
             'comments' => fake()->paragraph,
             'rating' => fake()->numberBetween(1, 5),
             'user_id' => User::factory(),

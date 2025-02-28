@@ -11,7 +11,9 @@ class UpdateRestaurantRequest extends FormRequest
     {
         return [
             'name' => ['string', 'max:255'],
-            'location' => ['nullable', 'string', 'max:255'],
+            'location' => ['nullable', 'array'],
+            'location.latitude' => ['required_with:location', 'numeric'],
+            'location.longitude' => ['required_with:location', 'numeric'],
             'comments' => ['nullable', 'string'],
             'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
             'tags' => ['array'],

@@ -37,6 +37,10 @@ class Restaurant extends Model implements Imageable
         'rating',
     ];
 
+    protected $casts = [
+        'location' => 'array',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
