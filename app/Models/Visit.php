@@ -34,6 +34,10 @@ class Visit extends Model implements Imageable
         'restaurant_id',
     ];
 
+    protected $casts = [
+        'visited_at' => 'date',
+    ];
+
     protected function casts(): array
     {
         return [

@@ -40,6 +40,10 @@ class Dish extends Model implements Imageable
         'restaurant_id',
     ];
 
+    protected $casts = [
+        'price' => 'float',
+    ];
+
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
