@@ -76,7 +76,7 @@ class VisitController extends Controller
         Gate::authorize('view', $visit);
 
         $dishes = $visit->dishes()->with(['tags', 'images'])
-            ->get(['dishes.id', 'dishes.name', 'dishes.description', 'dishes.rating']);
+            ->get(['dishes.id', 'dishes.name', 'dishes.comments', 'dishes.rating']);
 
         return ResponseHelper::success(DishListResource::collection($dishes));
     }

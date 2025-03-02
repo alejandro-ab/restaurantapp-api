@@ -30,7 +30,7 @@ class DishController extends Controller
             ->when($request->get('name'), function ($query, $name) {
                 $query->where('name', 'like', "%$name%");
             })
-            ->get(['id', 'name', 'description', 'rating']);
+            ->get(['id', 'name', 'comments', 'rating']);
 
         return ResponseHelper::success(DishListResource::collection($dishes));
     }

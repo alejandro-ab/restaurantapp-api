@@ -76,7 +76,7 @@ class RestaurantController extends Controller
 
         $dishes = $restaurant->dishes()
             ->with(['tags', 'images'])
-            ->get(['id', 'name', 'description', 'rating']);
+            ->get(['id', 'name', 'comments', 'rating']);
 
         return ResponseHelper::success(DishListResource::collection($dishes));
     }

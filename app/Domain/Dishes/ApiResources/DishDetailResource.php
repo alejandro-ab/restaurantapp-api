@@ -19,7 +19,6 @@ class DishDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
             'price' => $this->price,
             'rating' => $this->rating,
             'comments' => $this->comments,

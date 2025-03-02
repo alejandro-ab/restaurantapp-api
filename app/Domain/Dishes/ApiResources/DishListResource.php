@@ -18,7 +18,7 @@ class DishListResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
+            'comments' => $this->comments,
             'rating' => $this->rating,
             'tags' => TagDetailResource::collection($this->tags),
             'images' => ImageDetailResource::collection($this->images->take(1)),
